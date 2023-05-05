@@ -1,21 +1,9 @@
-<!-- popup.html -->
-
 <!DOCTYPE html>
 <html>
 <head>
-<title>Mouse Click Capture</title>
-<script src="popupScript.js"></script>
+    <title>Mouse Click Capture</title>
 </head>
 <body>
-<button id="captureButton">Start Capture</button>
-<script>
-    document.getElementById('captureButton').addEventListener('click', () => {
-    chrome.runtime.sendMessage({ action: 'startCapture' });
-});
-
-    chrome.runtime.sendMessage({ action: 'getClickEvents' }, (clickEvents) => {
-    console.log(clickEvents);
-});
-</script>
+<button id="captureButton">Start Recording</button>
 </body>
 </html>

@@ -1,9 +1,9 @@
 // backgroundScript.js
 
 // Open a connection to the IndexedDB database
+var flag = false;
 var db;
 var request = indexedDB.open('mouseClickDB', 1);
-// var stop = true;
 
 request.onerror = function(event) {
     console.error("Error opening indexedDB:", event.target.errorCode);
@@ -16,17 +16,19 @@ request.onsuccess = function(event) {
     // Handle the received click data
     chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         // Store the received data in IndexedDB
-        //TODO
-        // if(message.action === "startCapture"){
-        //     console.log("Started");
-        //     stop = false;
-        // }else if(message.action === "stopCapture"){
-        //     console.log("Ended");
-        //     stop = true;
-        // }
-        // Until this
+        // if data.type === "click" then execute the following
+        console.log("BEFORE FLAG " + flag);
 
-        saveClickData(message);
+        if (flag === true && message.type === "click") {
+            saveClickData(message);
+        } else if (message.type === "startCapture") {
+            flag = true;
+            console.log("AFTER FLAG " + flag);
+        } else if (message.type === "stopCapture") {
+            flag = false;
+            console.log("AFTER FLAG " + flag);
+        }
+
     });
 };
 
@@ -38,6 +40,7 @@ request.onupgradeneeded = function(event) {
 };
 
 function saveClickData(data) {
+
     var transaction = db.transaction("clicks", "readwrite");
     var objectStore = transaction.objectStore("clicks");
 
@@ -58,6 +61,6 @@ function saveClickData(data) {
     };
     request1.onsuccess = (event) => {
         // Do something with the request.result!
-        console.log(`Name for SSN 444-44-4444 is ${request1.result.x}`);
+        console.log(`Name for x axis is ${request1.result.type}`);
     };
 }

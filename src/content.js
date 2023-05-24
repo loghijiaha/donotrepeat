@@ -1,4 +1,4 @@
-// Add an event listener to capture click events on the document
+
 document.addEventListener('click', function(event) {
     // Get the mouse coordinates
     var x = event.clientX;
@@ -6,6 +6,7 @@ document.addEventListener('click', function(event) {
 
     // Create an object to store the captured data
     var clickData = {
+        type: "click",
         x: x,
         y: y,
         timestamp: Date.now() // Optionally include a timestamp
